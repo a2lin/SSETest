@@ -1,0 +1,23 @@
+
+<%= form_tag messaging_path, :method => 'get' do %>
+
+<%= text_field_tag :message, params[:message] %>
+<%= submit_tag "Post Message" %>
+<script type="text/javascript">
+	var source = new EventSource('/messaging?message="awesome"');
+	source.addEventListener('message', function(e) {
+		console.log(e.data);
+	}, false);
+
+	source.addEventListener('open', function(e) {
+	  // Connection was opened.
+	}, false);
+
+	source.addEventListener('error', function(e) {
+		if (e.readyState == EventSource.CLOSED) {
+	    // Connection was closed.
+	  }
+	}, false);
+</script>
+
+<% end %>
